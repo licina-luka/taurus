@@ -1,0 +1,16 @@
+#!/usr/bin/ruby
+
+require_relative '../lib/taurus'
+
+def main argv, argc
+  result, err = Taurus.req [{find: {check: "<%= ! ((value || 0) > Time.now.to_i) %>"}}]
+
+  if ! err
+    puts result
+    return
+  end
+
+  puts "FAILED: #{err}"
+end
+
+main ARGV, ARGV.length
