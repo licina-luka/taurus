@@ -3,10 +3,12 @@
 require_relative '../lib/taurus'
 
 def main argv, argc
-  result, err = Taurus.req [{find: {check: "<%= ! ((value || 0) > Time.now.to_i) %>"}}]
+  result, err = Taurus.req [{first: {check: "<%= value.to_i < Time.now.to_i %>",
+                                     attribute:"back",
+                                     value: nil}}]
 
   if ! err
-    puts result
+    pp result
     return
   end
 
